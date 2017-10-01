@@ -23,4 +23,12 @@ The program ``gentree`` will create a tree with all words in the corpus, in reve
 <img src="https://raw.githubusercontent.com/brunexgeek/suffix-classifier/explain/images/words.dot.png" width='650px'/>
 
 
-In the image above, every node (except the root) represents letters in the words of the corpus. Blue nodes are points of decision: at this point we have two or more paths to follow, each of them giving a different response (or classification). These are the most important nodes, because they will define the rules used to build the decision tree.
+In the image above, every node (except the root) represents letters in the words of the corpus. Blue nodes with multiple child nodes are points of decision: at this point we have two or more paths to follow, each of them giving a different response (or classification). These are the most important nodes, because they will define the rules used to build the decision tree.
+
+> Notice that intermediary nodes between decision points and the root are also marked. This simplify the tree transversal because we can visit only the relevant paths.
+
+Using the word tree above, the program ``gentree`` can build the decision tree. Basically, each decision point in the word tree will became a rule in the decision tree. Our decision tree is presented below. Nodes with gray fill represents the classification at that point.
+
+<img src="https://raw.githubusercontent.com/brunexgeek/suffix-classifier/explain/images/decision.dot.png" width='650px'/>
+
+To predict a classification for a word using the decision tree, one need just to reverse the word letters and tranverse the decision tree through the rules.

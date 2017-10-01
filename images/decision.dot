@@ -1,0 +1,48 @@
+ graph ROOT {
+N32394544 [label="E?"];
+N32394640 [label="1",style=filled]
+N32394592 -- N32394640 [label="true"];
+N32394688 [label="0",style=filled]
+N32394592 -- N32394688 [label="false"];
+N32394592 [label="[1] == R?"]
+N32394544 -- N32394592 [label="true"];
+N32394880 [label="1",style=filled]
+N32394832 -- N32394880 [label="true"];
+N32394928 [label="0",style=filled]
+N32394832 -- N32394928 [label="false"];
+N32394832 [label="[2] == T?"]
+N32394784 -- N32394832 [label="true"];
+N32394976 [label="0",style=filled]
+N32394784 -- N32394976 [label="false"];
+N32394784 [label="[1] == I?"]
+N32394736 -- N32394784 [label="true"];
+N32409728 [label="1",style=filled]
+N32409680 -- N32409728 [label="true"];
+N32409776 [label="0",style=filled]
+N32409680 -- N32409776 [label="false"];
+N32409680 [label="[2] == W?"]
+N32409632 -- N32409680 [label="true"];
+N32409824 [label="0",style=filled]
+N32409632 -- N32409824 [label="false"];
+N32409632 [label="[1] == E?"]
+N32409584 -- N32409632 [label="true"];
+N32409968 [label="1",style=filled]
+N32409920 -- N32409968 [label="true"];
+N32410016 [label="0",style=filled]
+N32409920 -- N32410016 [label="false"];
+N32409920 [label="[1] == A?"]
+N32409872 -- N32409920 [label="true"];
+N32410112 [label="1",style=filled]
+N32410064 -- N32410112 [label="true"];
+N32410160 [label="0",style=filled]
+N32410064 -- N32410160 [label="false"];
+N32410064 [label="[0] == T?"]
+N32409872 -- N32410064 [label="false"];
+N32409872 [label="[0] == R?"]
+N32409584 -- N32409872 [label="false"];
+N32409584 [label="[0] == N?"]
+N32394736 -- N32409584 [label="false"];
+N32394736 [label="[0] == M?"]
+N32394544 -- N32394736 [label="false"];
+N32394544 [label="[0] == E?"]
+}
