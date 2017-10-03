@@ -137,3 +137,68 @@ void Decision::plot(
 			output << " [label=\"false\"];" << std::endl;
 	}
 }
+
+
+#define NODE_DECISION 0x01
+#define NODE_RESPONSE 0x02
+#define NODE_NULL     0x03
+
+
+void Decision::serialize(
+	std::ostream &output )
+{
+	int32_t data = 0;
+
+	if (symbol >= 0)
+	{
+		data = NODE_DECISION;
+		output.write( (char*)&data, sizeof(data) );
+		output.write( (char*)&symbol, sizeof(symbol) );
+		output.write( (char*)&index, sizeof(index) );
+
+		data = NODE_NULL;
+		if (positive != nullptr)
+			positive->serialize(output);
+		else
+			output.write( (char*)&data, sizeof(data) );
+
+		if (negative != nullptr)
+			negative->serialize(output);
+		else
+			output.write( (char*)&data, sizeof(data) );
+	}
+	else
+	{
+		data = NODE_RESPONSE;
+		output.write( (char*)&data, sizeof(data) );
+		output.write( (char*)&response, sizeof(response) );
+	}
+}
+
+
+Decision *Decision::deserialize(
+	std::istream &input )
+{
+	int32_t data = 0;
+	input.read( (char*)&data, sizeof(data) );
+
+	Decision *output = nullptr;
+
+	if (data == NODE_DECISION)
+	{
+		output = new Decision();
+		input.read( (char*)&output->symbol, sizeof(output->symbol) );
+		input.read( (char*)&output->index, sizeof(output->index) );
+
+		output->positive = deserialize(input);
+		output->negative = deserialize(input);
+	}
+	else
+	if (data == NODE_RESPONSE)
+	{
+		output = new Decision();
+		input.read( (char*)&output->response, sizeof(output->response) );
+	}
+
+	return output;
+}

@@ -26,11 +26,11 @@
 class Decision
 {
 	public:
-		int symbol;
+		int32_t symbol;
 
-		int response;
+		int32_t response;
 
-		int index;
+		int32_t index;
 
 		Decision *positive;
 
@@ -52,6 +52,12 @@ class Decision
 
 		void plot(
 			std::ostream &output);
+
+		static Decision *deserialize(
+			std::istream &input );
+
+		void serialize(
+			std::ostream &output );
 
 	private:
 		void plot(
