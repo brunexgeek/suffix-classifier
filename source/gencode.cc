@@ -160,91 +160,36 @@ int main( int argc, char **argv )
 {
 	if (argc != 3)
 	{
-		std::cerr << "Usage: gentree <corpus> <output prefix>" << std::endl;
+		std::cerr << "Usage: gencode <tree file> <output file>" << std::endl;
 		return 1;
 	}
 
-	// loads words from input file
-	Database words;
-	words.load(argv[1]);
-	if (words.empty())
-	{
-		std::cerr << "Can not load words from '" << argv[1] << "'" << std::endl;
-		return 1;
-	}
-	std::cerr << "Loaded " << words.size() << " words" << std::endl << std::endl;
+	Decision *decision = nullptr;
 
-	// creates the graph parsing each word
-	Node root(nullptr);
-	std::vector<DatabaseEntry>::iterator first = words.begin();
-	std::vector<DatabaseEntry>::iterator last = words.end();
-	for (; first != last; ++first)
+	// load the decision tree
+	std::ifstream input(argv[1], std::ios_base::binary);
+	if (input.good())
 	{
-		root.append(first->word, first->response);
+		decision = Decision::deserialize(input);
+		input.close();
 	}
 
-	root.checkMixed();
-
-#if 0
-	for (size_t i = 0; i < Node::MAX_SYMBOLS; ++i)
-	{
-		if (root[i] == nullptr) continue;
-
-		std::cerr << "Exporting '" << Node::unmap(i) << "'" << std::endl;
-		std::string fileName = "graph_";
-		fileName += Node::unmap(i);
-		fileName += ".dot";
-		std::ofstream out(fileName.c_str());
-		if (out.good())
-		{
-			root[i]->print(out);
-			out.close();
-		}
-	}
-#elif 0
-	std::ofstream out1("words.dot", std::ios_base::ate);
-	if (out1.good())
-	{
-		root.plot(out1);
-		out1.close();
-	}
-#endif
-
-	std::ofstream out;
-
-	// build the decision tree
-	Decision *decision = Decision::build(root, 0);
 	if (decision == nullptr)
 	{
-		std::cerr << "Unable to generate decision tree" << std::endl;
-		return 1;
-	}
-
-	// plot the decision tree in a dotviz compatible format
-	std::string fileName = std::string(argv[2]) + ".dot";
-	out.open(fileName.c_str(), std::ios_base::ate);
-	if (out.good())
-	{
-		decision->plot(out);
-		out.close();
-	}
-	else
-	{
-		std::cerr << "Unable to create the file '" << fileName << "'" << std::endl;
+		std::cerr << "Unable to load decision tree from '" << std::string(argv[1]) << "'" << std::endl;
 		return 1;
 	}
 
 	// serialize the decision tree
-	fileName = std::string(argv[2]) + ".tree";
-	out.open(fileName.c_str(), std::ios_base::ate | std::ios_base::binary);
+	std::ofstream out(argv[2], std::ios_base::ate);
 	if (out.good())
 	{
-		decision->serialize(out);
+		generateCode(out, *decision);
 		out.close();
 	}
 	else
 	{
-		std::cerr << "Unable to create the file '" << fileName << "'" << std::endl;
+		std::cerr << "Unable to save the C source code to '" << std::string(argv[2]) << "'" << std::endl;
 		return 1;
 	}
 

@@ -18,6 +18,13 @@ set_target_properties(gentree PROPERTIES
 	LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
 	RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
 
+add_executable(gencode "source/Node.cc" "source/Decision.cc" "source/gencode.cc")
+set_target_properties(gencode PROPERTIES
+	OUTPUT_NAME "gencode"
+	ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+	LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+	RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
+
 add_executable(evaluate "source/Database.cc" "source/evaluate.cc" "source/generated.c")
 set_target_properties(evaluate PROPERTIES
 	OUTPUT_NAME "evaluate"
