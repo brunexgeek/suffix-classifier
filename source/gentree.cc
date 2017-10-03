@@ -171,7 +171,7 @@ int main( int argc, char **argv )
 	std::cerr << "Loaded " << words.size() << " words" << std::endl << std::endl;
 
 	// creates the graph parsing each word
-	Node root;
+	Node root(nullptr);
 	std::vector<DatabaseEntry>::iterator first = words.begin();
 	std::vector<DatabaseEntry>::iterator last = words.end();
 	for (; first != last; ++first)

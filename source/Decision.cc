@@ -56,7 +56,7 @@ Decision *Decision::build(
 
 		if (root[i]->flags & Node::FLAG_DECISION)
 		{
-			std::cerr << "decision <if " << Node::unmap((int)i) << ">" << std::endl;
+			//std::cerr << "decision <if " << Node::unmap((int)i) << ">" << std::endl;
 			current->symbol = (int) i;
 			current->index  = depth;
 			current->positive = build( *root[i], defaultResponse, depth + 1 );
@@ -65,7 +65,7 @@ Decision *Decision::build(
 		}
 		else
 		{
-			std::cerr << "return " << root[i]->response << " <if " << Node::unmap((int)i) << ">" << std::endl;
+			//std::cerr << "return " << root[i]->response << " <if " << Node::unmap((int)i) << ">" << std::endl;
 			current->symbol = (int) i;
 			current->index  = depth;
 			current->positive = new Decision(current);
@@ -75,19 +75,15 @@ Decision *Decision::build(
 		}
 	}
 
+	// check if we have an empty (probably) negative node
 	if (current != nullptr && current->symbol < 0 && current->response < 0)
 	{
-#if 1
-		current->response = defaultResponse;
-#else
-		if (current->parent != nullptr && current->parent->negative == current)
-		{
-			current->parent->negative = nullptr;
-			delete current;
-		}
+		// if the current node is a terminal, we must use its value
+		// as default response
+		if (root.flags & Node::FLAG_TERMINAL)
+			current->response = root.response;
 		else
 			current->response = defaultResponse;
-#endif
 	}
 
 	return output;

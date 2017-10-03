@@ -55,7 +55,10 @@ class Node
 		 */
 		int count;
 
-		Node();
+		Node *parent;
+
+		Node(
+			Node *parent );
 
 		~Node();
 
@@ -101,7 +104,8 @@ class Node
 		void appendChar(
 			const std::string &value,
 			int resp,
-			size_t position );
+			size_t position,
+			bool &overwrite );
 
 		void plot(
 			std::ostream &output,
