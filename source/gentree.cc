@@ -50,7 +50,7 @@ static void generateDecisionCode(
 	if (root.symbol >= 0)
 	{
 		indent(out, depth);
-		out << "if ( features[" << root.index << "] == " << std::hex << "0x" << root.symbol;
+		out << "if ( features[" << std::dec << root.index << "] == " << std::hex << "0x" << root.symbol;
 		out << " /* " << Node::unmap(root.symbol) << " */ )" << std::endl;
 		indent(out, depth);
 		out << "{" << std::endl;
@@ -136,7 +136,7 @@ int classifyWord( const char *word, int len )
 	int features[@SIZE@];
 	int i = 0;
 	const char *ptr;
-	if (word == 0 || len < @SIZE@) return -1;
+	if (word == 0) return -1;
 	ptr = word + (len - 1);
 	for (; i < @SIZE@; ++i, --ptr)
 	{
@@ -207,6 +207,11 @@ int main( int argc, char **argv )
 #endif
 
 	Decision *decision = Decision::build(root, 0);
+	if (decision == nullptr)
+	{
+		std::cerr << "Unable to generate decision tree" << std::endl;
+		return 1;
+	}
 	std::ofstream out2("decision.dot", std::ios_base::ate);
 	if (out2.good())
 	{

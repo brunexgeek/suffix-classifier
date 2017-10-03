@@ -64,7 +64,7 @@ bool Node::checkMixed()
 		if (resp < 0)
 			resp = next[i]->response;
 
-		if (recursive || resp != next[i]->response)
+		if (recursive || resp != next[i]->response || response != next[i]->response)
 		{
 			flags |= FLAG_DECISION;
 			result = true;

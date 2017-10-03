@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 #include <iostream>
+#include <iomanip>
 #include "Database.hh"
 
 
@@ -28,7 +29,20 @@ int classifyWord( const std::string &value )
 
 int main( int argc, char **argv )
 {
-	if (argc != 2) return 1;
+	if (argc != 2)
+	{
+		std::string line;
+
+		while (true)
+		{
+			std::cout << "     Input: ";
+			std::getline(std::cin, line);
+			if (line.empty()) break;
+			std::cout << "Prediction: " << line << " is " << classifyWord(line) << std::endl << std::endl;
+		}
+
+		return 0;
+	}
 
 	// loads words from input file
 	Database words;
@@ -44,6 +58,6 @@ int main( int argc, char **argv )
 	std::vector<DatabaseEntry>::iterator last = words.end();
 	for (; first != last; ++first)
 	{
-		std::cout << first->word << "(" << first->response << ") == " << classifyWord(first->word) << std::endl;
+		std::cout << std::setw(20) << first->word << std::setw(2) << first->response << " -> " << std::setw(2) << classifyWord(first->word) << std::endl;
 	}
 }
