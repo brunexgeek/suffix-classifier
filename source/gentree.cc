@@ -201,7 +201,7 @@ int main( int argc, char **argv )
 			out.close();
 		}
 	}
-#elif 0
+#elif 1
 	std::ofstream out1("words.dot", std::ios_base::ate);
 	if (out1.good())
 	{

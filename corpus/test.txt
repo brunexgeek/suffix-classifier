@@ -1,0 +1,4 @@
+Jim        1
+Rupert     1
+Candice    0
+Gisele     0
