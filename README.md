@@ -15,7 +15,7 @@ Use the following commands to build the programs:
     # cd build
     # cmake .. && make
 
-## Runnning
+## Running
 
 Use the program ``gentree`` to generate the *decision tree* from a corpus:
 
@@ -49,21 +49,6 @@ To perform the training, we need a corpus composed by words and its classificati
 - Classes must be positive integral values.
 
 ## How it works?
-
-The goal of the algorithm it to build a decision tree which uses the smallest suffixes possible to decide the classification of the input word.
-
-Until the end of this secion, we'll use the following corpus to explain the algorithm. The following corpus enable us to classify the gender of people names with the classes 0 (female) and 1 (male).
-
-```
-    Melissa  0
-    Alice    0
-    Adele    0
-    Hayden   0
-    Robert   1
-    Cesar    1
-    Jayden   1
-    Tim      1
-```
 
 The first step is to create a *word tree*. The program ``gentree`` will create this tree with all words in the corpus, in reverse order (e.g. from the root you have 'rasec' instead of 'cesar'). Words with similar suffixes follow the same path in the tree until some letter makes them different. To illustrate, consider the following corpus which enable us to classify the gender of people names with the classes 0 (female) and 1 (male).
 
