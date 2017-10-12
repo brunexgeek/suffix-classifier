@@ -17,27 +17,33 @@ Use the following commands to build the programs:
 
 ## Running
 
-Use the program ``gentree`` to generate the *decision tree* from a corpus:
+*   Use the program ``gentree`` to generate the *decision tree* from a corpus:
 
-    # ./gentree ../corpus/names.txt names.tree
+        # ./gentree ../corpus/names.txt example
 
-Use the program ``gencode`` to generate C source code from a *decision tree*:
+    This program also enable you to choose the default response when no match is found. By default, the default response is -1.
 
-    # ./gencode names.tree generated.c
+        # ./gentree ../corpus/names.txt 0 example
 
-The program ``evaluate`` enable you to test the classifier. Just replace the file ``generated.c`` in the ``source`` directory and recompile the program:
+    The advantage of choosing a default response as one of responses in the corpus is to reduce the *decison tree* size, since *decision nodes* for that response are not generated.
 
-    # cp generated.c ../source/generated.c
-    # make evaluate
+*   Use the program ``gencode`` to generate C source code from a *decision tree*:
 
-You can evaluate interactively (providing words through keyboard)
+        # ./gencode example.tree generated.c
 
-    # evaluate
+*   The program ``evaluate`` enable you to test the classifier. Just replace the file ``generated.c`` in the ``source`` directory and recompile the program:
 
-or using a input labeled file
+        # cp generated.c ../source/generated.c
+        # make evaluate
 
-    # evaluate ../corpus/names.txt
-    # evaluate ../corpus/test.txt
+    You can evaluate interactively (providing words through keyboard)
+
+        # evaluate
+
+    or using a input labeled file
+
+        # evaluate ../corpus/names.txt
+        # evaluate ../corpus/test.txt
 
 
 ## Corpus
@@ -78,7 +84,7 @@ Notice that intermediary nodes between decision points and the root are also mar
 
 The next step is to generate the *decision tree*. The program ``gentree`` transverse the *word tree* and create one or more *decision nodes* (decision tree nodes) for each *decision point* in the *word tree*.
 
-Our *decision tree* is presented below. Nodes in gray represents the classification at that point.
+Our *decision tree* is presented below (using 0 as default response). Nodes in gray represents the classification at that point.
 
 <img src="https://raw.githubusercontent.com/brunexgeek/suffix-classifier/explain/images/decision.dot.png" width='700px'/>
 

@@ -80,7 +80,7 @@ static void generateDecisionCode(
 	}
 }
 
-
+/*
 static std::string replaceString(
 	const std::string &source,
 	const std::string& from,
@@ -154,13 +154,29 @@ int classifyWord( const char *word, int len )
 	publicFunc = replaceString(publicFunc, "@SIZE@", temp);
 	out << publicFunc;
 }
+*/
+
+static bool textToInteger(
+	const std::string &text,
+	int &value )
+{
+	try
+	{
+		value = stoi(text);
+		return true;
+	} catch (...)
+	{
+		return false;
+	}
+}
 
 
 int main( int argc, char **argv )
 {
-	if (argc != 3)
+	if (argc != 3 && argc != 4)
 	{
 		std::cerr << "Usage: gentree <corpus> <output prefix>" << std::endl;
+		std::cerr << "       gentree <corpus> <default class> <output prefix>" << std::endl;
 		return 1;
 	}
 
@@ -186,6 +202,8 @@ int main( int argc, char **argv )
 	root.checkMixed();
 
 #if 0
+	// use this with larger word trees
+
 	for (size_t i = 0; i < Node::MAX_SYMBOLS; ++i)
 	{
 		if (root[i] == nullptr) continue;
@@ -201,7 +219,9 @@ int main( int argc, char **argv )
 			out.close();
 		}
 	}
-#elif 1
+#elif 0
+	// use this with smaller word trees
+
 	std::ofstream out1("words.dot", std::ios_base::ate);
 	if (out1.good())
 	{
@@ -212,8 +232,22 @@ int main( int argc, char **argv )
 
 	std::ofstream out;
 
+	// check whether the user specified a default response
+	int defaultValue = 0;
+	std::string outputPreffix = argv[2];
+	if (textToInteger(argv[2], defaultValue))
+	{
+		if (defaultValue < 0) defaultValue *= -1;
+		outputPreffix = argv[3];
+	}
+	else
+	{
+		defaultValue = -1;
+	}
+	std::cerr << "Default response is " << defaultValue << std::endl;
+
 	// build the decision tree
-	Decision *decision = Decision::build(root, 0);
+	Decision *decision = Decision::build(root, defaultValue);
 	if (decision == nullptr)
 	{
 		std::cerr << "Unable to generate decision tree" << std::endl;
@@ -221,7 +255,7 @@ int main( int argc, char **argv )
 	}
 
 	// plot the decision tree in a dotviz compatible format
-	std::string fileName = std::string(argv[2]) + ".dot";
+	std::string fileName = outputPreffix + ".dot";
 	out.open(fileName.c_str(), std::ios_base::ate);
 	if (out.good())
 	{
@@ -235,7 +269,7 @@ int main( int argc, char **argv )
 	}
 
 	// serialize the decision tree
-	fileName = std::string(argv[2]) + ".tree";
+	fileName = outputPreffix + ".tree";
 	out.open(fileName.c_str(), std::ios_base::ate | std::ios_base::binary);
 	if (out.good())
 	{

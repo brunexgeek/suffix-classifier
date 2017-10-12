@@ -40,7 +40,6 @@ Decision *Decision::build(
 	int depth )
 {
 	if ((root.flags & Node::FLAG_DECISION) == 0) return nullptr;
-	if (defaultResponse < 0) return nullptr;
 
 	Decision *output = nullptr;
 	Decision *current = nullptr;
@@ -121,10 +120,7 @@ void Decision::plot(
 	if (symbol >= 0 && index >= 0)
 		output << "[" << index << "] == " << (char)Node::unmap(symbol) << "?\"";
 	else
-	if (response >= 0)
 		output << response << "\",style=filled";
-	else
-		output << "???\"";
 	output << "]" << std::endl;
 
 	// print the edge
