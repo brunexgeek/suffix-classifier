@@ -1,0 +1,10 @@
+Kim      0
+Alice    0
+Adele    0
+Hayden   0
+Harper   0
+Robert   1
+Cesar    1
+Bowen    1
+Tim      1
+Theodore 1
