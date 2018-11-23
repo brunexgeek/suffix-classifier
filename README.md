@@ -73,7 +73,7 @@ The first step is to create a *word tree*. The program ``gentree`` will create t
 
 The *word tree* of the above corpus will look like this:
 
-<img src="https://raw.githubusercontent.com/brunexgeek/suffix-classifier/explain/images/words.dot.png" width='700px'/>
+<img src="https://raw.githubusercontent.com/brunexgeek/suffix-classifier/master/images/words.dot.png" width='700px'/>
 
 In the image above, every node (except the root) represents letters in the words of the corpus. Gray node are terminals (the first letter of the word) and include the word classification between parenthesis. Blue nodes are points of decision or nodes between the root and points of decision. Points of decision are:
 
@@ -86,6 +86,6 @@ The next step is to generate the *decision tree*. The program ``gentree`` transv
 
 Our *decision tree* is presented below (using 0 as default response). Nodes in gray represents the classification at that point.
 
-<img src="https://raw.githubusercontent.com/brunexgeek/suffix-classifier/explain/images/decision.dot.png" width='700px'/>
+<img src="https://raw.githubusercontent.com/brunexgeek/suffix-classifier/master/images/decision.dot.png" width='700px'/>
 
 To predict a classification for a word using the *decision tree*, one need just to reverse the input word and tranverse the *decision tree* through the decisions.
